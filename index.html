@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>music lyrics  of artist </title>
+</head>
+
+<body>
+  <button data-person="chris brown ">these hoes aint loyal </button>
+  <button data-person="Michael Jackson">
+    just beat it beat it beat it beat it
+  </button>
+
+
+  <button data-person="Rihanna ">
+   bitch better have  my money 
+  </button>
+  <button data-person="Taylor Swift">
+ we are never ever ever getting back together 
+  </button>
+  <button data-person="ariana grande">
+    my gloss is popping.. you like my hair ? ghee thanks just bought it 
+  </button>
+  <button data-person="Beyonce ">
+    who run the world? Girls
+  </button>
+  <button data-person="kanye west ">
+work it, make it, do it, makes us, harder, better, faster, stronger
+  </button>
+  <button data-person="lil mama"> my lip gloss is popping, my lip gloss is cool</button>
+  <button data-person="drake ">
+      nice for what
+  </button>
+  <button data-person="davido">
+fia fia 
+  </button>
+
+
+  <div id="gifs-appear-here">
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+   
+    $("button").on("click", function() {
+     
+      var person = $(this).attr("data-person");
+
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        person + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+    
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+      
+        .then(function(response) {
+       
+          var results = response.data;
+
+          for (var i = 0; i < results.length; i++) {
+
+            
+            if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
+            
+              var gifDiv = $("<div>");
+
+              var rating = results[i].rating;
+
+         
+              var p = $("<p>").text("Rating: " + rating);
+
+           
+              var personImage = $("<img>");
+
+             
+              personImage.attr("src", results[i].images.fixed_height.url);
+
+              gifDiv.append(p);
+              gifDiv.append(personImage);
+
+             
+              $("#gifs-appear-here").prepend(gifDiv);
+              
+          
+        
+  
+    
+            }
+          }
+        });
+    });
+  </script>
+</body>
+
+</html>
